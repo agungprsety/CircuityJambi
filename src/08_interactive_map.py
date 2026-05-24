@@ -140,6 +140,8 @@ def run_interactive_map():
     border-radius: 8px;
   }}
   .leaflet-popup-tip {{ background: rgba(30,30,30,0.85); border: 1px solid rgba(255,255,255,0.1); }}
+  .leaflet-tooltip-pane {{ z-index: 1000 !important; }}
+
   
   /* LABEL TOOLTIPS */
   .label-normal, .label-worst {{
