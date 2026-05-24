@@ -512,8 +512,8 @@ layers.worst5 = L.geoJSON(kelurahanData, {{
 }}).addTo(map);
 
 // All Kelurahan Labels
-layers.labels = L.geoJSON(kelurahanData, {{
-  style: {{ fillOpacity: 0, weight: 0, opacity: 0 }},
+layers.labels = L.layerGroup();
+L.geoJSON(kelurahanData, {{
   onEachFeature: function(f, layer) {{
     const center = layer.getBounds().getCenter();
     const isWorst = f.properties.is_top_5_worst;
@@ -530,7 +530,7 @@ layers.labels = L.geoJSON(kelurahanData, {{
       iconSize: [0, 0],
       iconAnchor: [0, 0]
     }});
-    L.marker(center, {{ icon: label, interactive: false }}).addTo(map);
+    L.marker(center, {{ icon: label, interactive: false }}).addTo(layers.labels);
   }}
 }});
 // Add labels to map by default
