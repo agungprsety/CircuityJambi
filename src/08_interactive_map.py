@@ -29,7 +29,7 @@ def run_interactive_map():
         "NAMOBJ", "WADMKC", "eta_mean", "eta_economic", "eta_education",
         "eta_health", "daily_time_lost_min", "rank_eta",
         "is_top_5_worst", "is_top_5_best", "total_pairs", "disconnected_pairs",
-        "geometry"
+        "annual_cost_total_idr", "geometry"
     ]
     gdf_kel_slim = gdf_kel[keep_cols].copy()
 
@@ -431,6 +431,10 @@ def run_interactive_map():
         <div class="di-label">Economic η</div>
         <div class="di-value" id="dp-econ">—</div>
       </div>
+      <div class="detail-item" style="grid-column: span 2; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #444;">
+        <div class="di-label" style="color: #ff8a80;">Annual Economic Tax (VoT + VOC)</div>
+        <div class="di-value" id="dp-cost" style="color: #ff8a80; font-size: 16px;">—</div>
+      </div>
     </div>
   </div>
 
@@ -634,6 +638,14 @@ function showDetail(p) {{
   const ecEl = document.getElementById('dp-econ');
   ecEl.textContent = p.eta_economic != null ? p.eta_economic.toFixed(3) : '—';
   ecEl.className = 'di-value ' + etaClass(p.eta_economic);
+
+  const costEl = document.getElementById('dp-cost');
+  if (p.annual_cost_total_idr != null) {{
+    const mil = p.annual_cost_total_idr / 1000000;
+    costEl.textContent = 'Rp ' + mil.toFixed(1) + ' Juta / person';
+  }} else {{
+    costEl.textContent = '—';
+  }}
 }}
 </script>
 </body>

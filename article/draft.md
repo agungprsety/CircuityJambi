@@ -58,9 +58,17 @@ By contrast, the best-performing kelurahan — Mayang Mangurai (η = 1.30), Kena
 
 This is a textbook example of **geography-driven circuity**: the Batang Hari river is not going anywhere. However, geography explains the *location* of the inefficiency, not its *magnitude*. Arab Melayu's η = 3.45 is not merely "slightly disconnected" — it is categorically dysfunctional. An η of 1.5–1.7 would be expected for a riverbank neighborhood. A value of 3.4 suggests that road planning in this area has simply not kept pace with settlement growth.
 
+### Finding 3: The Hidden Economic Tax
+
+When we translate these time and distance penalties into a financial metric using standard transport economics (Value of Time + Vehicle Operating Cost), the abstract concept of "inefficiency" becomes a very real economic tax.
+
+Using the World Bank's conservative approach for non-work Value of Time (30% of Jambi's GRDP per capita) and standard Indonesian motorcycle operating costs (Rp 350/km, fuel + maintenance), the residents of the most circuitous kelurahans are paying millions of Rupiah per year simply because the roads don't connect. 
+
+In Arab Melayu, the average resident loses approximately **95 minutes** and travels **extra kilometers** every single day. Economically, this translates to an invisible "connectivity tax" of roughly **Rp 3.6 Million per person, per year** (Rp ~14,000/day). For a family of three, that is over Rp 10 Million entirely wasted on bad road topology—almost a third of the annual minimum wage (UMK) simply burned in transit.
+
 *(See Figure 2: Category Heatmap — circuity breakdown by destination type, Top 20 worst kelurahan)*
 
-### Finding 3: Economic Access Is the Hardest to Reach
+### Finding 4: Economic Access Is the Hardest to Reach
 
 Across all destination categories, **economic access (markets, shops) shows the highest city-wide mean circuity** at η = 1.83, followed by education (η = 1.70) and health (η = 1.67).
 

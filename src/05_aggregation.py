@@ -37,7 +37,20 @@ def run_aggregation():
     summary['time_lost_min'] = (summary['eta_mean'] - 1) * summary['avg_d_euclidean_km'] / 25 * 60
     
     # FR-05-3 Compute daily time lost assuming 3 trips/day
-    summary['daily_time_lost_min'] = summary['time_lost_min'] * 3
+    summary['daily_time_lost_min'] = summary['time_lost_min'] * config.TRIPS_PER_DAY
+    
+    # NEW: Calculate Economic Penalty (VoT and VOC)
+    summary['daily_cost_vot_idr'] = summary['daily_time_lost_min'] * config.VOT_IDR_PER_MIN
+    
+    # Extra distance per day in km = (d_network - d_euclidean) * 3
+    # Wait, d_network isn't directly aggregated yet. Let's compute extra_km per trip
+    # extra_distance_km = avg_d_euclidean_km * (eta_mean - 1)
+    summary['extra_distance_km'] = summary['avg_d_euclidean_km'] * (summary['eta_mean'] - 1)
+    summary['daily_extra_km'] = summary['extra_distance_km'] * config.TRIPS_PER_DAY
+    summary['daily_cost_voc_idr'] = summary['daily_extra_km'] * config.VOC_IDR_PER_KM
+    
+    summary['daily_cost_total_idr'] = summary['daily_cost_vot_idr'] + summary['daily_cost_voc_idr']
+    summary['annual_cost_total_idr'] = summary['daily_cost_total_idr'] * config.WORKING_DAYS_PER_YEAR
     
     # FR-05-4 Rank kelurahan 1-N by mean eta (1 = worst connectivity = highest eta)
     summary['rank_eta'] = summary['eta_mean'].rank(ascending=False, method='min')

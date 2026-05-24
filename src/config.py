@@ -5,6 +5,11 @@ CRS_PROJECTED = "EPSG:32748"   # UTM Zone 48S
 AVG_SPEED_KMH = 25             # Urban congested speed assumption
 TRIPS_PER_DAY = 3              # For daily time-cost calculation
 
+# Economic Parameters (Jambi 2024 Context)
+VOT_IDR_PER_MIN = 155          # Value of Time (World Bank 30% of GRDP approach)
+VOC_IDR_PER_KM = 350           # Vehicle Operating Cost (motorcycle, IDR/km)
+WORKING_DAYS_PER_YEAR = 250    # Estimated annual commuting days
+
 # Shapefile field names — dynamically verified from data
 FIELD_KELURAHAN  = "NAMOBJ"
 FIELD_KECAMATAN  = "WADMKC"
