@@ -1,0 +1,12 @@
+osmnx
+networkx
+geopandas
+pandas
+numpy
+matplotlib
+seaborn
+folium
+shapely
+scipy
+nominatim
+leaflet

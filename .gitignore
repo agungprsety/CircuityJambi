@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Data Pipeline (ignore large intermediates, keep final summaries and raw boundaries)
+data/*.graphml
+data/od_results.csv
+data/osm_roads_jambi_optimized.geojson
+data/cache/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
