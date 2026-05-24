@@ -9,7 +9,7 @@ This repository powers the findings in the article: *"The Circuity Ratio: A Spat
 ## 🗺️ Interactive WebGIS Dashboard
 
 You can explore the final results on the interactive dashboard:
-**(Replace with your GitHub Pages URL: https://agung.github.io/circuity-jambi)**
+**http://circuity-jambi.netlify.app/**
 
 ## 🚀 Getting Started
 
