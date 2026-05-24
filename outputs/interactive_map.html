@@ -294,6 +294,10 @@
     <span class="toggle-label"><span class="cat-dot" style="background:#66bb6a"></span> Economic & Retail (12)</span>
     <div class="switch on" data-layer="economic" onclick="toggleLayer(this)"><div class="knob"></div></div>
   </div>
+  <div class="toggle-row" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #333;">
+    <span class="toggle-label"><span class="cat-dot" style="background:transparent;border:1px solid #999;"></span> Kelurahan Labels</span>
+    <div class="switch on" data-layer="labels" onclick="toggleLayer(this)"><div class="knob"></div></div>
+  </div>
 
   <div class="section-title">Legend — Circuity Ratio (η)</div>
   <div class="legend-bar"></div>
@@ -431,7 +435,7 @@ layers.choropleth = L.geoJSON(kelurahanData, {
   }
 }).addTo(map);
 
-// Worst 5
+// Worst 5 borders
 layers.worst5 = L.geoJSON(kelurahanData, {
   filter: function(f) { return f.properties.is_top_5_worst === true; },
   style: function() {
@@ -443,18 +447,33 @@ layers.worst5 = L.geoJSON(kelurahanData, {
       fillOpacity: 0,
       interactive: false
     };
-  },
+  }
+}).addTo(map);
+
+// All Kelurahan Labels
+layers.labels = L.geoJSON(kelurahanData, {
+  style: { fillOpacity: 0, weight: 0, opacity: 0 },
   onEachFeature: function(f, layer) {
     const center = layer.getBounds().getCenter();
+    const isWorst = f.properties.is_top_5_worst;
+    
+    // Style matches the static visualization
+    const color = isWorst ? '#ff8a80' : 'rgba(255,255,255,0.4)';
+    const weight = isWorst ? '700' : '500';
+    const size = isWorst ? '12px' : '9px';
+    const shadow = isWorst ? '0 1px 4px rgba(0,0,0,0.9)' : 'none';
+    
     const label = L.divIcon({
       className: '',
-      html: `<div style="color:#ff8a80;font-family:Inter,sans-serif;font-size:11px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,0.8);white-space:nowrap;">${f.properties.NAMOBJ}</div>`,
+      html: `<div style="color:${color};font-family:Inter,sans-serif;font-size:${size};font-weight:${weight};text-shadow:${shadow};white-space:nowrap;text-align:center;transform:translate(-50%,-50%);pointer-events:none;">${f.properties.NAMOBJ}</div>`,
       iconSize: [0, 0],
       iconAnchor: [0, 0]
     });
     L.marker(center, { icon: label, interactive: false }).addTo(map);
   }
-}).addTo(map);
+});
+// Add labels to map by default
+map.addLayer(layers.labels);
 
 // Destinations by category
 const catColors = {
