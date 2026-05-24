@@ -22,3 +22,7 @@ data/cache/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Private Docs
+methodology.md
+PRD.md
