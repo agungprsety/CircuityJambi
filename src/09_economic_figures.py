@@ -25,25 +25,31 @@ def generate_economic_figures():
                                         "xtick.color": "white", "ytick.color": "white",
                                         "grid.color": "#333333", "font.family": "sans-serif"})
 
-    # --- Figure 5: Top 10 Kelurahan by Economic Tax ---
-    plt.figure(figsize=(10, 6))
-    top10 = df.nlargest(10, 'annual_cost_juta')
+    # --- Figure 5: All Kelurahan by Economic Tax ---
+    # Sort all rows by cost descending
+    df_sorted = df.sort_values('annual_cost_juta', ascending=False)
     
-    ax = sns.barplot(x='annual_cost_juta', y=config.FIELD_KELURAHAN, data=top10, palette="Reds_r")
+    # Increase figure height significantly to fit ~60+ kelurahan
+    plt.figure(figsize=(12, 18))
     
-    plt.title("Top 10 Kelurahan: Annual Connectivity Tax per Person", fontsize=14, pad=15, fontweight='bold')
-    plt.xlabel("Annual Cost (Millions IDR)", fontsize=11)
+    ax = sns.barplot(x='annual_cost_juta', y=config.FIELD_KELURAHAN, data=df_sorted, palette="Reds_r")
+    
+    plt.title("All Kelurahan: Annual Connectivity Tax per Person", fontsize=16, pad=20, fontweight='bold')
+    plt.xlabel("Annual Cost (Millions IDR)", fontsize=12)
     plt.ylabel("")
     
     # Add value labels to the bars
-    for i, v in enumerate(top10['annual_cost_juta']):
-        ax.text(v + 0.1, i, f" Rp {v:.1f} Jt", color='white', va='center', fontweight='bold', fontsize=10)
+    for i, v in enumerate(df_sorted['annual_cost_juta']):
+        ax.text(v + 0.1, i, f" Rp {v:.1f} Jt", color='white', va='center', fontweight='bold', fontsize=8)
         
     # Formatting
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.spines['bottom'].set_color('#555555')
     ax.spines['left'].set_color('#555555')
+    
+    # Adjust y-axis tick font size so labels fit
+    plt.yticks(fontsize=9)
     
     plt.tight_layout()
     fig5_path = os.path.join(config.OUTPUT_FIGURES, "fig5_economic_tax_bar.png")

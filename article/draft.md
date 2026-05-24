@@ -66,7 +66,7 @@ Using the World Bank's conservative approach for non-work Value of Time (30% of 
 
 In Arab Melayu, the average resident loses approximately **95 minutes** and travels **extra kilometers** every single day. Economically, this translates to an invisible "connectivity tax" of roughly **Rp 3.6 Million per person, per year** (Rp ~14,000/day). For a family of three, that is over Rp 10 Million entirely wasted on bad road topology—almost a third of the annual minimum wage (UMK) simply burned in transit.
 
-*(See Figure 5: Bar Chart — Top 10 Kelurahan with the highest annual connectivity tax)*
+*(See Figure 5: Bar Chart — All 62 Kelurahan ranked by their annual connectivity tax)*
 
 *(See Figure 6: Scatter Plot — Exponential relationship between Circuity Ratio and Annual Economic Cost)*
 
