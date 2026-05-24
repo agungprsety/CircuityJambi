@@ -103,7 +103,7 @@ A neighborhood doesn't need a new expressway. It often just needs one 400-meter 
 
 ## 5. Open Method, Replicable Everywhere
 
-Every dataset and script used in this analysis is publicly available. The road network was downloaded from **OpenStreetMap** using the `osmnx` library (Boeing, 2017). Administrative boundaries are from Indonesia's official **BPS PODES** kelurahan shapefile. All routing was computed in Python using `NetworkX`, with routing done at average urban congested speed (25 km/h).
+Every dataset and script used in this analysis is publicly available. The road network was downloaded from **OpenStreetMap** using the `osmnx` library (Boeing, 2017). Administrative boundaries are kelurahan shapefile. All routing was computed in Python using `NetworkX`, with routing done at average urban congested speed (25 km/h).
 
 The full pipeline — from raw data download to final visualizations — is available on GitHub at **[github.com/agung/circuity-jambi]** *(link forthcoming)*. It can be adapted for any Indonesian city with an OSM road network within approximately 2 hours of compute time.
 

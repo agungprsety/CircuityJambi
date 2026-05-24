@@ -99,7 +99,7 @@ circuity-jambi/
 ## 📊 Data Sources
 
 - **Road Network & POIs:** OpenStreetMap contributors (via `osmnx`)
-- **Administrative Boundaries:** BPS PODES 2021 (Kelurahan boundaries)
+- **Administrative Boundaries:** DPUTR KOta Jambi (Kelurahan boundaries)
 - **Methodology Reference:** Levinson, D. & El-Geneidy, A. (2009). The minimum circuity frontier. *Regional Science and Urban Economics*, 39(6).
 
 ## 📄 License
