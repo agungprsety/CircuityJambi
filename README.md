@@ -1,4 +1,4 @@
-# Circuity Ratio Analyzer — Kota Jambi
+# Circuity Ratio Analyzer — Case Study Kota Jambi Urban Road Network
 
 An open-source Python analysis pipeline that computes the **road network circuity ratio (η)** for every kelurahan (neighborhood) in Kota Jambi, Indonesia. 
 
