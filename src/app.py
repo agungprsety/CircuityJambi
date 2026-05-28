@@ -53,8 +53,7 @@ if show_destinations:
     categories = gdf_dests['category'].unique().tolist()
     selected_categories = st.sidebar.multiselect("Filter Destinations", categories, default=categories)
 
-show_major_roads = st.sidebar.checkbox("Show Major Roads", value=True)
-show_minor_roads = st.sidebar.checkbox("Show Minor Roads", value=False)
+show_roads = st.sidebar.checkbox("Show Road Network", value=True)
 highlight_worst = st.sidebar.checkbox("Highlight Top 5 Worst Kelurahan", value=True)
 
 st.sidebar.markdown("---")
@@ -111,33 +110,17 @@ folium.GeoJson(
     tooltip=tooltip
 ).add_to(m)
 
-# Road Network layers (above Kelurahan layer, below Destinations/worst outline)
-if gdf_roads is not None:
-    if show_major_roads:
-        major_roads = gdf_roads[gdf_roads['road_type'] == 'major']
-        if not major_roads.empty:
-            folium.GeoJson(
-                major_roads,
-                name="Major Roads",
-                style_function=lambda x: {
-                    'color': '#ff9100',
-                    'weight': 1.5,
-                    'opacity': 0.85
-                }
-            ).add_to(m)
-            
-    if show_minor_roads:
-        minor_roads = gdf_roads[gdf_roads['road_type'] == 'minor']
-        if not minor_roads.empty:
-            folium.GeoJson(
-                minor_roads,
-                name="Minor Roads",
-                style_function=lambda x: {
-                    'color': '#78909c',
-                    'weight': 0.8,
-                    'opacity': 0.5
-                }
-            ).add_to(m)
+# Road Network layer (above Kelurahan layer, below Destinations/worst outline)
+if gdf_roads is not None and show_roads:
+    folium.GeoJson(
+        gdf_roads,
+        name="Road Network",
+        style_function=lambda x: {
+            'color': '#26c6da',  # light blue
+            'weight': 1.2,
+            'opacity': 0.75
+        }
+    ).add_to(m)
 
 m.add_child(colormap)
 

@@ -381,12 +381,8 @@ def run_interactive_map():
     <div class="switch on" data-layer="worst5" onclick="toggleLayer(this)"><div class="knob"></div></div>
   </div>
   <div class="toggle-row">
-    <span class="toggle-label"><span style="border-bottom: 2px solid #ff9100; width: 14px; display: inline-block; margin-right: 4px; vertical-align: middle;"></span> Major Roads</span>
-    <div class="switch on" data-layer="majorRoads" onclick="toggleLayer(this)"><div class="knob"></div></div>
-  </div>
-  <div class="toggle-row">
-    <span class="toggle-label"><span style="border-bottom: 2px solid #78909c; width: 14px; display: inline-block; margin-right: 4px; vertical-align: middle;"></span> Minor Roads</span>
-    <div class="switch" data-layer="minorRoads" onclick="toggleLayer(this)"><div class="knob"></div></div>
+    <span class="toggle-label"><span style="border-bottom: 2px solid #26c6da; width: 14px; display: inline-block; margin-right: 4px; vertical-align: middle;"></span> Road Network</span>
+    <div class="switch on" data-layer="roads" onclick="toggleLayer(this)"><div class="knob"></div></div>
   </div>
 
   <div class="section-title">Destinations</div>
@@ -564,31 +560,17 @@ layers.worst5 = L.geoJSON(kelurahanData, {{
   }}
 }}).addTo(map);
 
-// Major Roads
-layers.majorRoads = L.geoJSON(roadData, {{
-  filter: function(f) {{ return f.properties.road_type === 'major'; }},
+// Road Network
+layers.roads = L.geoJSON(roadData, {{
   style: function() {{
     return {{
-      color: '#ff9100',
-      weight: 1.5,
-      opacity: 0.85,
+      color: '#26c6da',
+      weight: 1.2,
+      opacity: 0.75,
       interactive: false
     }};
   }}
 }}).addTo(map);
-
-// Minor Roads
-layers.minorRoads = L.geoJSON(roadData, {{
-  filter: function(f) {{ return f.properties.road_type === 'minor'; }},
-  style: function() {{
-    return {{
-      color: '#78909c',
-      weight: 0.8,
-      opacity: 0.5,
-      interactive: false
-    }};
-  }}
-}});
 
 // All Kelurahan Labels using Tooltips
 layers.labels = L.geoJSON(kelurahanData, {{
