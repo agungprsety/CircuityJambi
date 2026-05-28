@@ -4,8 +4,6 @@ An open-source Python analysis pipeline that computes the **road network circuit
 
 The circuity ratio compares the actual road network distance to the straight-line (Euclidean) distance between a residential neighborhood and key public services (health clinics, schools, and markets). A high η indicates a disconnected street grid where residents must travel much farther than necessary, paying a daily "circuity ratio" in time and distance.
 
-This repository powers the findings in the article: *"The Circuity Ratio: A Spatial Analysis of Road Network Inefficiency in Kota Jambi"*.
-
 ## 🗺️ Interactive WebGIS Dashboard
 
 You can explore the final results on the interactive dashboard:
