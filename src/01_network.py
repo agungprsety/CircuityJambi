@@ -34,6 +34,20 @@ def acquire_network():
     print(f"Saving graph to {graph_path}...")
     ox.save_graphml(G_proj, filepath=graph_path)
     
+    # Save a simplified, categorized GeoJSON version of the road network for the dashboards
+    print("Generating and saving road network GeoJSON for dashboards...")
+    gdf_nodes, gdf_edges = ox.graph_to_gdfs(G_proj)
+    gdf_edges = gdf_edges.to_crs("EPSG:4326")
+    major_types = {'trunk', 'primary', 'secondary', 'tertiary', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary_link'}
+    gdf_edges['road_type'] = gdf_edges['highway'].apply(
+        lambda x: 'major' if (x[0] if isinstance(x, list) else x) in major_types else 'minor'
+    )
+    gdf_out = gdf_edges[['geometry', 'road_type']].copy()
+    gdf_out.geometry = gdf_out.geometry.round(5)
+    road_network_path = os.path.join(config.DATA_PROCESSED, "road_network.geojson")
+    gdf_out.to_file(road_network_path, driver="GeoJSON")
+    print(f"Road network GeoJSON saved to {road_network_path}")
+    
     # FR-01-4 Log node count, edge count, and CRS
     num_nodes = len(G_proj.nodes)
     num_edges = len(G_proj.edges)

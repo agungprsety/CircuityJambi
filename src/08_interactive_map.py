@@ -14,15 +14,19 @@ def run_interactive_map():
     # Load data
     summary_path = os.path.join(config.DATA_PROCESSED, "summary_kelurahan.geojson")
     dest_path = os.path.join(config.DATA_PROCESSED, "destinations.geojson")
+    road_path = os.path.join(config.DATA_PROCESSED, "road_network.geojson")
 
     gdf_kel = gpd.read_file(summary_path)
     gdf_dest = gpd.read_file(dest_path)
+    gdf_road = gpd.read_file(road_path)
 
     # Ensure WGS84
     if gdf_kel.crs and gdf_kel.crs.to_string() != "EPSG:4326":
         gdf_kel = gdf_kel.to_crs("EPSG:4326")
     if gdf_dest.crs and gdf_dest.crs.to_string() != "EPSG:4326":
         gdf_dest = gdf_dest.to_crs("EPSG:4326")
+    if gdf_road.crs and gdf_road.crs.to_string() != "EPSG:4326":
+        gdf_road = gdf_road.to_crs("EPSG:4326")
 
     # Slim down kelurahan properties to reduce file size
     keep_cols = [
@@ -43,6 +47,7 @@ def run_interactive_map():
     # Convert to GeoJSON strings
     kelurahan_geojson = gdf_kel_slim.to_json()
     dest_geojson = gdf_dest[["dest_name", "category", "geometry"]].to_json()
+    road_geojson = gdf_road.to_json()
 
     # Compute stats for the dashboard header
     city_eta = round(gdf_kel["eta_mean"].mean(), 2)
@@ -375,6 +380,14 @@ def run_interactive_map():
     <span class="toggle-label">Worst 5 Highlight</span>
     <div class="switch on" data-layer="worst5" onclick="toggleLayer(this)"><div class="knob"></div></div>
   </div>
+  <div class="toggle-row">
+    <span class="toggle-label"><span style="border-bottom: 2px solid #ff9100; width: 14px; display: inline-block; margin-right: 4px; vertical-align: middle;"></span> Major Roads</span>
+    <div class="switch on" data-layer="majorRoads" onclick="toggleLayer(this)"><div class="knob"></div></div>
+  </div>
+  <div class="toggle-row">
+    <span class="toggle-label"><span style="border-bottom: 2px solid #78909c; width: 14px; display: inline-block; margin-right: 4px; vertical-align: middle;"></span> Minor Roads</span>
+    <div class="switch" data-layer="minorRoads" onclick="toggleLayer(this)"><div class="knob"></div></div>
+  </div>
 
   <div class="section-title">Destinations</div>
 
@@ -454,6 +467,7 @@ def run_interactive_map():
 // ── DATA ──
 const kelurahanData = {kelurahan_geojson};
 const destData = {dest_geojson};
+const roadData = {road_geojson};
 
 // ── MAP INIT ──
 const map = L.map('map', {{ zoomControl: true }}).setView([-1.62, 103.60], 12);
@@ -549,6 +563,32 @@ layers.worst5 = L.geoJSON(kelurahanData, {{
     }};
   }}
 }}).addTo(map);
+
+// Major Roads
+layers.majorRoads = L.geoJSON(roadData, {{
+  filter: function(f) {{ return f.properties.road_type === 'major'; }},
+  style: function() {{
+    return {{
+      color: '#ff9100',
+      weight: 1.5,
+      opacity: 0.85,
+      interactive: false
+    }};
+  }}
+}}).addTo(map);
+
+// Minor Roads
+layers.minorRoads = L.geoJSON(roadData, {{
+  filter: function(f) {{ return f.properties.road_type === 'minor'; }},
+  style: function() {{
+    return {{
+      color: '#78909c',
+      weight: 0.8,
+      opacity: 0.5,
+      interactive: false
+    }};
+  }}
+}});
 
 // All Kelurahan Labels using Tooltips
 layers.labels = L.geoJSON(kelurahanData, {{

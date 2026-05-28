@@ -24,18 +24,22 @@ st.markdown("""
 def load_data():
     summary_path = os.path.join(config.DATA_PROCESSED, "summary_kelurahan.geojson")
     dest_path = os.path.join(config.DATA_PROCESSED, "destinations.geojson")
+    road_path = os.path.join(config.DATA_PROCESSED, "road_network.geojson")
     
     gdf_kel = gpd.read_file(summary_path)
     gdf_dest = gpd.read_file(dest_path)
+    gdf_road = gpd.read_file(road_path) if os.path.exists(road_path) else None
     
     if gdf_kel.crs is None or gdf_kel.crs.to_string() != "EPSG:4326":
         gdf_kel = gdf_kel.to_crs("EPSG:4326")
     if gdf_dest.crs is None or gdf_dest.crs.to_string() != "EPSG:4326":
         gdf_dest = gdf_dest.to_crs("EPSG:4326")
+    if gdf_road is not None and (gdf_road.crs is None or gdf_road.crs.to_string() != "EPSG:4326"):
+        gdf_road = gdf_road.to_crs("EPSG:4326")
         
-    return gdf_kel, gdf_dest
+    return gdf_kel, gdf_dest, gdf_road
 
-gdf_kelurahan, gdf_dests = load_data()
+gdf_kelurahan, gdf_dests, gdf_roads = load_data()
 
 # --- SIDEBAR ---
 st.sidebar.title("🗺️ Circuity Ratio Explorer")
@@ -49,6 +53,8 @@ if show_destinations:
     categories = gdf_dests['category'].unique().tolist()
     selected_categories = st.sidebar.multiselect("Filter Destinations", categories, default=categories)
 
+show_major_roads = st.sidebar.checkbox("Show Major Roads", value=True)
+show_minor_roads = st.sidebar.checkbox("Show Minor Roads", value=False)
 highlight_worst = st.sidebar.checkbox("Highlight Top 5 Worst Kelurahan", value=True)
 
 st.sidebar.markdown("---")
@@ -104,6 +110,34 @@ folium.GeoJson(
     highlight_function=highlight_function,
     tooltip=tooltip
 ).add_to(m)
+
+# Road Network layers (above Kelurahan layer, below Destinations/worst outline)
+if gdf_roads is not None:
+    if show_major_roads:
+        major_roads = gdf_roads[gdf_roads['road_type'] == 'major']
+        if not major_roads.empty:
+            folium.GeoJson(
+                major_roads,
+                name="Major Roads",
+                style_function=lambda x: {
+                    'color': '#ff9100',
+                    'weight': 1.5,
+                    'opacity': 0.85
+                }
+            ).add_to(m)
+            
+    if show_minor_roads:
+        minor_roads = gdf_roads[gdf_roads['road_type'] == 'minor']
+        if not minor_roads.empty:
+            folium.GeoJson(
+                minor_roads,
+                name="Minor Roads",
+                style_function=lambda x: {
+                    'color': '#78909c',
+                    'weight': 0.8,
+                    'opacity': 0.5
+                }
+            ).add_to(m)
 
 m.add_child(colormap)
 
